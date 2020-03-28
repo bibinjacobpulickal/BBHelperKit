@@ -12,7 +12,7 @@ import UIKit.UIViewController
 
 extension UIViewController {
 
-    func showAlert(_ title: String? = "Error!",
+    public func showAlert(_ title: String? = "Error!",
                    message: String?,
                    actions: [String: UIAlertAction.Style] = [:],
                    handler: ((UIAlertAction) -> Void)? = nil) {
@@ -27,7 +27,7 @@ extension UIViewController {
         present(alert, animated: true)
     }
 
-    func presentActivityIndicator(completion: (() -> Void)? = nil) {
+    public func presentActivityIndicator(completion: (() -> Void)? = nil) {
 
         let alert            = UIAlertController(title: nil, message: "Loading...", preferredStyle: .alert)
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
