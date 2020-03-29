@@ -53,15 +53,17 @@ public enum ImageLoader {
 
     private static func loadImageFromNetwork(_ url: URL, _ completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.global(qos: .background).async {
-            if let data = try? Data(contentsOf: url) {
+            if let data = try? Data(contentsOf: url),
+                let image = UIImage(data: data) {
                 DispatchQueue.main.async {
-                    if let image = UIImage(data: data) {
-                        cache.setObject(image, forKey: url.asString())
-                        completion(image)
-                    }
+                    cache.setObject(image, forKey: url.asString())
+                    completion(image)
                 }
             } else {
-                completion(nil)
+                DispatchQueue.main.async {
+                    cache.removeObject(forKey: url.asString())
+                    completion(nil)
+                }
             }
         }
     }
