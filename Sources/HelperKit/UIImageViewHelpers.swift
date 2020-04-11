@@ -5,7 +5,7 @@
 //  Created by Bibin Jacob Pulickal on 10/04/20.
 //
 
-import Foundation
+#if canImport(UIKit)
 import UIKit.UIImageView
 
 let cache = NSCache<NSString, UIImage>()
@@ -68,3 +68,4 @@ public enum ImageLoader {
         }
     }
 }
+#endif

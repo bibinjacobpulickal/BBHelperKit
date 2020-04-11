@@ -7,14 +7,14 @@
 
 #if canImport(UIKit)
 import UIKit.UIViewController
-#endif
 
 extension UIViewController {
 
     public func showAlert(_ title: String? = "Error!",
                    message: String?,
                    actions: [String: UIAlertAction.Style] = [:],
-                   handler: ((UIAlertAction) -> Void)? = nil) {
+                   handler: ((UIAlertAction) -> Void)? = nil,
+                   setup: ((UIAlertController) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if actions.isEmpty {
             alert.addAction(UIAlertAction(title: "Okay", style: .default))
@@ -23,6 +23,7 @@ extension UIViewController {
                 alert.addAction(UIAlertAction(title: action.key, style: action.value, handler: handler))
             }
         }
+        setup?(alert)
         present(alert, animated: true)
     }
 
@@ -44,3 +45,4 @@ extension UIViewController {
         present(alert, animated: true, completion: completion)
     }
 }
+#endif
