@@ -10,7 +10,7 @@ import Foundation
 @propertyWrapper
 public struct CodableUserDefault<T: Codable> {
 
-    let key: String
+    public let key: String
 
     public var wrappedValue: T? {
         get {
@@ -30,17 +30,12 @@ public struct CodableUserDefault<T: Codable> {
 }
 
 @propertyWrapper
-struct UserDefault<T> {
+public struct UserDefault<T> {
 
-    let value: T
-    let key: String
+    public let value: T
+    public let key: String
 
-    init(setValue: T, forKey: String) {
-        value = setValue
-        key   = forKey
-    }
-
-    var wrappedValue: T {
+    public var wrappedValue: T {
         get {
             return UserDefaults.standard.object(forKey: key) as? T ?? value
         }
@@ -51,11 +46,11 @@ struct UserDefault<T> {
 }
 
 @propertyWrapper
-struct OptionalUserDefault<T> {
+public struct OptionalUserDefault<T> {
 
-    let key: String
+    public let key: String
 
-    var wrappedValue: T? {
+    public var wrappedValue: T? {
         get {
             return UserDefaults.standard.object(forKey: key) as? T
         }
