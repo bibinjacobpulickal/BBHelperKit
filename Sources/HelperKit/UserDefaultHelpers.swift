@@ -12,6 +12,10 @@ public struct CodableUserDefault<T: Codable> {
 
     public let key: String
 
+    public init(key: String) {
+        self.key = key
+    }
+
     public var wrappedValue: T? {
         get {
             if let data = UserDefaults.standard.data(forKey: key) {
