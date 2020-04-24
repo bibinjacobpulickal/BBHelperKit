@@ -12,7 +12,7 @@ public struct CodableUserDefault<T: Codable> {
 
     public let key: String
 
-    public init(key: String) {
+    public init(forKey key: String) {
         self.key = key
     }
 
@@ -49,10 +49,21 @@ public struct UserDefault<T> {
     }
 }
 
+public extension UserDefault {
+    
+    init(setValue value: T, forKey key: String) {
+        self.init(value: value, key: key)
+    }
+}
+
 @propertyWrapper
 public struct OptionalUserDefault<T> {
 
     public let key: String
+
+    public init(forKey key: String) {
+        self.key = key
+    }
 
     public var wrappedValue: T? {
         get {
