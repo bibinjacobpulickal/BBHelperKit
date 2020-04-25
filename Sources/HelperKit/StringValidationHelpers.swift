@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol Validatable {
+public protocol Validatable {
     var regex: String { get }
     var errorMessage: String { get }
 }
 
-extension String {
+public extension String {
 
     func validate(using validator: Validatable, message: (String) -> Void) -> Bool {
         let bool = NSPredicate(
