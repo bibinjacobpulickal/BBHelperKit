@@ -27,22 +27,7 @@ extension UIViewController {
         present(alert, animated: true)
     }
 
-    public func presentActivityIndicator(completion: (() -> Void)? = nil) {
-
-        let alert            = UIAlertController(title: nil, message: "Loading...", preferredStyle: .alert)
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-
-        loadingIndicator.hidesWhenStopped = true
-        if #available(iOS 13.0, *) {
-            loadingIndicator.style            = .large
-        } else {
-            loadingIndicator.style            = .whiteLarge
-        }
-
-        loadingIndicator.startAnimating()
-        alert.view.addSubview(loadingIndicator)
-
-        present(alert, animated: true, completion: completion)
-    }
+    @available(*, deprecated, message: "Use 'BBLoader' package's 'presentLoader' method instead")
+    public func presentActivityIndicator(completion: (() -> Void)? = nil) { }
 }
 #endif
