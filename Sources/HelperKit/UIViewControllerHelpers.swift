@@ -17,7 +17,7 @@ extension UIViewController {
                    setup: ((UIAlertController) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if actions.isEmpty {
-            alert.addAction(UIAlertAction(title: "Okay", style: .default))
+            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: handler))
         } else {
             for action in actions {
                 alert.addAction(UIAlertAction(title: action.key, style: action.value, handler: handler))
