@@ -45,7 +45,9 @@ public extension UITableView {
     }
 
     @available(*, unavailable, renamed: "register")
-    func registerForHeaderFooterView<CellClass: UITableViewHeaderFooterView>(_ cellClass: CellClass.Type) {
+    func registerForHeaderFooterView<CellClass: UITableViewHeaderFooterView>(_ cellClass: CellClass.Type) { }
+
+    func register<CellClass: UITableViewHeaderFooterView>(_ cellClass: CellClass.Type) {
         register(cellClass, forHeaderFooterViewReuseIdentifier: cellClass.identifier)
     }
 
@@ -60,7 +62,11 @@ public extension UITableView {
         return cell
     }
 
-    @available(*, unavailable, renamed: "register")
+    @available(*, unavailable, renamed: "dequeue")
+    func dequeueHeaderFooterView<CellClass: UITableViewHeaderFooterView>(
+        _ cellClass: CellClass.Type,
+        setup: ((CellClass) -> Void)? = nil) -> UITableViewHeaderFooterView { UITableViewHeaderFooterView() }
+
     func dequeue<CellClass: UITableViewHeaderFooterView>(
         _ cellClass: CellClass.Type,
         setup: ((CellClass) -> Void)? = nil) -> UITableViewHeaderFooterView {
