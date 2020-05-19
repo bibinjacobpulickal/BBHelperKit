@@ -28,10 +28,23 @@ extension UITableViewHeaderFooterView: Reusable { }
 
 public extension UITableView {
 
+    func register<CellClass: UITableViewCell>(_ cellClasses: [CellClass.Type]) {
+        for cellClass in cellClasses {
+            register(cellClass)
+        }
+    }
+
     func register<CellClass: UITableViewCell>(_ cellClass: CellClass.Type) {
         register(cellClass, forCellReuseIdentifier: cellClass.identifier)
     }
 
+    func register<CellClass: UITableViewHeaderFooterView>(_ cellClasses: [CellClass.Type]) {
+        for cellClass in cellClasses {
+            register(cellClass)
+        }
+    }
+
+    @available(*, unavailable, renamed: "register")
     func registerForHeaderFooterView<CellClass: UITableViewHeaderFooterView>(_ cellClass: CellClass.Type) {
         register(cellClass, forHeaderFooterViewReuseIdentifier: cellClass.identifier)
     }
@@ -47,7 +60,8 @@ public extension UITableView {
         return cell
     }
 
-    func dequeueHeaderFooterView<CellClass: UITableViewHeaderFooterView>(
+    @available(*, unavailable, renamed: "register")
+    func dequeue<CellClass: UITableViewHeaderFooterView>(
         _ cellClass: CellClass.Type,
         setup: ((CellClass) -> Void)? = nil) -> UITableViewHeaderFooterView {
         let cell = dequeueReusableHeaderFooterView(withIdentifier: cellClass.identifier)
