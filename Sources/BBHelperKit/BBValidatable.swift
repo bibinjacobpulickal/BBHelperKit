@@ -17,12 +17,13 @@ public protocol BBValidatable {
 
 public extension String {
 
-    func validate(using validator: BBValidatable, message: (String) -> Void) -> Bool {
-        let bool = NSPredicate(
-            format: "SELF MATCHES %@",
-            validator.regex)
-            .evaluate(with: self)
-        if !bool {
+    func validate(using validator: BBValidatable, message: (String) -> Void) throws -> Bool {
+        let regex = try NSRegularExpression(pattern: validator.regex)
+        let range = NSRange(location: 0, length: utf16.count)
+        let bool  = regex.firstMatch(in: self, options: [], range: range) != nil
+        if bool {
+            message("")
+        } else {
             message(validator.errorMessage)
         }
         return bool
