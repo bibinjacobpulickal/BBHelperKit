@@ -7,9 +7,6 @@
 
 import Foundation
 
-@available(*, unavailable, renamed: "BBValidatable")
-public protocol Validatable { }
-
 public protocol BBValidatable {
     var regex: String { get }
     var errorMessage: String { get }
@@ -17,10 +14,17 @@ public protocol BBValidatable {
 
 public extension String {
 
-    func validate(using validator: BBValidatable, message: ((String) -> Void)? = nil) throws -> Bool {
-        let regex = try NSRegularExpression(pattern: validator.regex)
+    func validateUsingBBPattern(_ pattern: String) throws -> Bool {
+        let regex = try NSRegularExpression(pattern: pattern)
         let range = NSRange(location: 0, length: utf16.count)
-        let bool  = regex.firstMatch(in: self, options: [], range: range) != nil
+        return regex.firstMatch(in: self, options: [], range: range) != nil
+    }
+
+    @available(*, unavailable, renamed: "validateUsingBBValidator(_:message:)")
+    func validate(using validator: BBValidatable, message: ((String) -> Void)? = nil) throws -> Bool { false }
+
+    func validateUsingBBValidator(_ validator: BBValidatable, message: ((String) -> Void)? = nil) throws -> Bool {
+        let bool = try validateUsingBBPattern(validator.regex)
         if bool {
             message?("")
         } else {
