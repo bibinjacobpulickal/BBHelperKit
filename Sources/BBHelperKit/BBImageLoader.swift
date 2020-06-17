@@ -27,14 +27,15 @@ extension URL: URLStringConvertible {
 
 extension UIImageView {
 
-    public func loadImage(_ url: URLStringConvertible?, alwaysFetch: Bool = false) {
-        ImageLoader.loadImage(url) { [weak self] image in
+    public func loadImage(_ url: URLStringConvertible?, alwaysFetch: Bool = false, completion: (() -> Void)? = nil) {
+        BBImageLoader.loadImage(url, alwaysFetch: alwaysFetch) { [weak self] image in
             self?.image = image
+            completion?()
         }
     }
 }
 
-public enum ImageLoader {
+public enum BBImageLoader {
 
     static func loadImage(_ url: URLStringConvertible?, alwaysFetch: Bool = false, _ completion: @escaping (UIImage?) -> Void) {
         guard let url = url?.asUrl() else {
