@@ -10,26 +10,30 @@ import UIKit.UIImageView
 
 let cache = NSCache<NSString, UIImage>()
 
-public protocol URLStringConvertible {
+public protocol BBURLNSStringConvertible {
     func asUrl() -> URL?
     func asString() -> NSString
 }
 
-extension String: URLStringConvertible {
+extension String: BBURLNSStringConvertible {
     public func asUrl() -> URL? { URL(string: self) }
     public func asString() -> NSString { NSString(string: self) }
 }
 
-extension URL: URLStringConvertible {
+extension URL: BBURLNSStringConvertible {
     public func asUrl() -> URL? { self }
     public func asString() -> NSString { NSString(string: absoluteString) }
 }
 
 extension UIImageView {
 
-    public func loadImage(_ url: URLStringConvertible?, alwaysFetch: Bool = false, completion: (() -> Void)? = nil) {
-        BBImageLoader.loadImage(url, alwaysFetch: alwaysFetch) { [weak self] image in
-            self?.image = image
+    public func loadBBImage(
+        _ url: BBURLNSStringConvertible?,
+        placeholder: UIImage?     = nil,
+        alwaysFetch: Bool         = false,
+        completion: (() -> Void)? = nil) {
+        BBImageLoader.loadBBImage(url, alwaysFetch: alwaysFetch) { [weak self] image in
+            self?.image = image ?? placeholder
             completion?()
         }
     }
@@ -37,22 +41,29 @@ extension UIImageView {
 
 public enum BBImageLoader {
 
-    static func loadImage(_ url: URLStringConvertible?, alwaysFetch: Bool = false, _ completion: @escaping (UIImage?) -> Void) {
+    static func loadBBImage(
+        _ url: BBURLNSStringConvertible?,
+        placeholder: UIImage? = nil,
+        alwaysFetch: Bool     = false,
+        _ completion: @escaping (UIImage?) -> Void) {
         guard let url = url?.asUrl() else {
-            completion(nil)
+            completion(placeholder)
             return
         }
         if let image = cache.object(forKey: url.asString()) {
             completion(image)
             if alwaysFetch {
-                loadImageFromNetwork(url, completion)
+                loadBBImageFromNetwork(url, completion)
             }
         } else {
-            loadImageFromNetwork(url, completion)
+            loadBBImageFromNetwork(url, completion)
         }
     }
 
-    private static func loadImageFromNetwork(_ url: URL, _ completion: @escaping (UIImage?) -> Void) {
+    private static func loadBBImageFromNetwork(
+        _ url: URL,
+        placeholder: UIImage? = nil,
+        _ completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.global(qos: .background).async {
             if let data = try? Data(contentsOf: url),
                 let image = UIImage(data: data) {
@@ -63,7 +74,7 @@ public enum BBImageLoader {
             } else {
                 DispatchQueue.main.async {
                     cache.removeObject(forKey: url.asString())
-                    completion(nil)
+                    completion(placeholder)
                 }
             }
         }
