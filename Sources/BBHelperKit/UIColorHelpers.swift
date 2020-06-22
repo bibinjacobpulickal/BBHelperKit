@@ -9,7 +9,7 @@
 
 import UIKit.UIColor
 
-extension UIColor {
+public extension UIColor {
 
     static var random: UIColor {
         UIColor(red: .random(in: 0...1),
@@ -18,7 +18,7 @@ extension UIColor {
                 alpha: 1)
     }
 
-    public convenience init?(hex: String) {
+    convenience init?(hex: String) {
         let start     = hex.hasPrefix("#") ?
             hex.index(hex.startIndex, offsetBy: 1) :
             hex.index(hex.startIndex, offsetBy: 0)
