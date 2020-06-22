@@ -39,7 +39,7 @@ public struct BBUserDefault<Type> {
     public let value: Type
     public let key: String
 
-    public var wrappedValue: Type? {
+    public var wrappedValue: Type {
         get { UserDefaults.standard.object(forKey: key) as? Type ?? value }
         set { UserDefaults.standard.set(newValue, forKey: key) }
     }
