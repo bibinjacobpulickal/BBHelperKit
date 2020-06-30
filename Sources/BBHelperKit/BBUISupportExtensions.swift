@@ -30,10 +30,10 @@ public extension UIEdgeInsets {
         self.init(top: top, left: left, bottom: bottom, right: right)
     }
     init(_ all: CGFloat) {
-        self.init(top: all, left: all, bottom: -all, right: -all)
+        self.init(top: all, left: all, bottom: all, right: all)
     }
     init(h horizontal: CGFloat = 0, v vertical: CGFloat = 0) {
-        self.init(top: vertical, left: horizontal, bottom: -vertical, right: -horizontal)
+        self.init(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
     }
 }
 
@@ -59,13 +59,13 @@ public extension NSEdgeInsets {
         self.init(top: top, left: left, bottom: bottom, right: right)
     }
     init(_ all: CGFloat) {
-        self.init(top: all, left: all, bottom: -all, right: -all)
+        self.init(top: all, left: all, bottom: all, right: all)
     }
     init(v vertical: CGFloat, h horizontal: CGFloat = 0) {
-        self.init(top: vertical, left: horizontal, bottom: -vertical, right: -horizontal)
+        self.init(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
     }
     init(h horizontal: CGFloat, v vertical: CGFloat = 0) {
-        self.init(top: vertical, left: horizontal, bottom: -vertical, right: -horizontal)
+        self.init(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
     }
 }
 
