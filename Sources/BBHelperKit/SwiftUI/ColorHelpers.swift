@@ -9,8 +9,21 @@ import SwiftUI
 
 @available(OSX 10.15, *)
 @available(iOS 13.0, *)
+public struct ForEachColorScheme<Content: View>: View {
+    public var content: () -> Content
+    public var body: some View {
+        ForEach(ColorScheme.allCases) {
+            content()
+                .environment(\.colorScheme, $0)
+        }
+    }
+}
+
+
+@available(OSX 10.15, *)
+@available(iOS 13.0, *)
 extension ColorScheme: Identifiable {
-    public var id: UUID { UUID() }
+    public var id: Int { hashValue }
 }
 
 @available(OSX 10.15, *)
