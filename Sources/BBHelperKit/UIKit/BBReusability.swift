@@ -101,6 +101,7 @@ import Cocoa
 
 extension NSCollectionViewItem: BBReusable { }
 
+@available(OSX 10.11, *)
 public extension NSCollectionView {
 
     func register<ItemClass: NSCollectionViewItem>(_ itemClass: ItemClass.Type) {
