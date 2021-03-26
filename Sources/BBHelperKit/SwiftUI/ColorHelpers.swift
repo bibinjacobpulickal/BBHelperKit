@@ -7,10 +7,19 @@
 
 import SwiftUI
 
-@available(OSX 10.15, *)
-@available(iOS 13.0, *)
-public struct ForEachColorScheme<Content: View>: View {
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+public struct ForEachColorScheme<Content> {
+
+    /// A function that can be used to generate content on demand given
     public var content: () -> Content
+    
+    public init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+extension ForEachColorScheme: View where Content: View {
     public var body: some View {
         ForEach(ColorScheme.allCases) {
             content()
@@ -20,14 +29,12 @@ public struct ForEachColorScheme<Content: View>: View {
 }
 
 
-@available(OSX 10.15, *)
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ColorScheme: Identifiable {
     public var id: Int { hashValue }
 }
 
-@available(OSX 10.15, *)
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension View {
 
     @inlinable func backgroundColor(_ color: Color, alignment: Alignment = .center) -> some View {
@@ -36,8 +43,7 @@ public extension View {
 }
 
 #if canImport(UIKit)
-@available(OSX 10.15, *)
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension View {
 
     @inlinable func backgroundColor(uiColor: UIColor, alignment: Alignment = .center) -> some View {
@@ -47,8 +53,7 @@ public extension View {
 #endif
 
 #if canImport(AppKit)
-@available(OSX 10.15, *)
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension View {
 
     @inlinable func backgroundColor(nsColor: NSColor, alignment: Alignment = .center) -> some View {
